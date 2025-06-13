@@ -1,193 +1,49 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>HỆ THỐNG IQ TỐI MẬT</title>
+  <title>Bài kiểm tra IQ siêu nghiêm túc</title>
   <style>
     body {
-      font-family: 'Courier New', monospace;
-      background-color: black;
-      color: lime;
+      font-family: Arial, sans-serif;
+      background-color: #fefefe;
       text-align: center;
-      padding: 40px;
-      overflow: hidden;
+      margin-top: 100px;
     }
-
-    h1 {
-      font-size: 3em;
-      color: red;
-      animation: flash 1s infinite;
-    }
-
     button {
       padding: 15px 30px;
-      font-size: 24px;
-      background-color: red;
-      color: white;
-      border: none;
+      font-size: 18px;
       border-radius: 10px;
+      border: none;
+      background-color: #3498db;
+      color: white;
       cursor: pointer;
-      animation: pulse 1s infinite;
     }
-
     #result {
-      margin-top: 30px;
-      font-size: 28px;
-      color: yellow;
-    }
-
-    img {
-      display: none;
-      margin-top: 20px;
-      width: 300px;
-    }
-
-    @keyframes flash {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.2; }
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
-    }
-
-    @keyframes shake {
-      0% { transform: translate(3px, 3px); }
-      25% { transform: translate(-3px, -3px); }
-      50% { transform: translate(3px, -3px); }
-      75% { transform: translate(-3px, 3px); }
-      100% { transform: translate(0, 0); }
-    }
-
-    .shake-strong {
-      animation: shake 0.1s infinite;
-    }
-
-    .terminal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: black;
-      color: lime;
-      font-size: 14px;
-      padding: 10px;
-      white-space: pre;
-      overflow: auto;
-      display: none;
-      z-index: 999;
-    }
-
-    #jumpscare {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: black;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-    }
-
-    #jumpscare img {
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover;
+      margin-top: 40px;
+      font-size: 24px;
+      color: red;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>🚨 HỆ THỐNG KIỂM TRA IQ 🚨</h1>
-  <p>Truy cập dữ liệu não bộ của bạn...</p>
-  <button onclick="startTroll()">BẮT ĐẦU</button>
-  <div id="result"></div>
-  <img id="meme" src="https://i.imgur.com/zF1t0Px.png" alt="Meme Troll">
-  
-  <div id="terminal" class="terminal"></div>
-  <div id="jumpscare">
-    <img src="https://i.imgur.com/YOUR_JUMPSCARE_IMAGE.gif" alt="😱 JUMPSCARE">
-  </div>
 
-  <!-- Âm thanh -->
-  <audio id="alert" src="https://www.myinstants.com/media/sounds/alarm.mp3"></audio>
-  <audio id="boom" src="https://www.myinstants.com/media/sounds/bomb-explosion.mp3"></audio>
-  <audio id="voice" src="https://www.myinstants.com/media/sounds/you-have-been-hacked.mp3"></audio>
-  <audio id="scream" src="https://www.myinstants.com/media/sounds/wilhelm-scream.mp3"></audio>
+  <h1>🤔 Bài kiểm tra IQ dành cho thiên tài</h1>
+  <p>Bạn hãy nhấn vào nút bên dưới để bắt đầu...</p>
+
+  <button onclick="startTroll()">Bắt đầu</button>
+
+  <div id="result"></div>
 
   <script>
-    const results = [
-      "Phân tích neuron...",
-      "Kết nối sóng não...",
-      "IQ bạn vượt ngưỡng đo!",
-      "IQ: ∞ – Bạn là thần đồng!",
-      "Cảnh báo: Não quá nóng!",
-      "Hệ thống bị ép quá tải bởi trí tuệ của bạn!",
-      "⚠️ Lỗi nghiêm trọng! IQ bạn đang phá hủy hệ thống!"
-    ];
-
-    let clickCount = 0;
-
     function startTroll() {
-      clickCount++;
-      const resultDiv = document.getElementById("result");
-      const meme = document.getElementById("meme");
-      const alertSound = document.getElementById("alert");
-      const boomSound = document.getElementById("boom");
-      const voice = document.getElementById("voice");
-      const scream = document.getElementById("scream");
-
-      // Rung mạnh
-      document.body.classList.add("shake-strong");
-
-      // Âm thanh đầu tiên
-      alertSound.play();
-
-      // Hiện kết quả ngẫu nhiên
+      const result = document.getElementById("result");
+      result.innerHTML = "Đang kiểm tra IQ của bạn... Vui lòng chờ 3 giây...";
       setTimeout(() => {
-        resultDiv.innerHTML = results[Math.floor(Math.random() * results.length)];
-        meme.style.display = "block";
-      }, 1000);
-
-      // Càng click, càng kịch tính
-      if (clickCount >= 3) {
-        boomSound.play();
-        resultDiv.innerHTML = "<span style='color:red;'>⚠️ Hệ thống nhiễm virus IQ ⚠️</span>";
-      }
-
-      if (clickCount === 5) {
-        voice.play();
-        showTerminal();
-      }
-
-      if (clickCount === 7) {
-        triggerJumpscare();
-      }
-    }
-
-    // Mã giả hacker chạy nền
-    function showTerminal() {
-      const terminal = document.getElementById("terminal");
-      terminal.style.display = "block";
-      let code = "";
-      for (let i = 0; i < 100; i++) {
-        code += ">>> Accessing brainwave_matrix_" + Math.random().toString(36).substring(2, 10) + "();\n";
-      }
-      terminal.textContent = code;
-    }
-
-    // Jumpscare cuối
-    function triggerJumpscare() {
-      const jumpscare = document.getElementById("jumpscare");
-      document.body.innerHTML = ""; // Xoá hết giao diện
-      document.body.appendChild(jumpscare);
-      jumpscare.style.display = "flex";
-      scream.play();
+        result.innerHTML = "Phát hiện: <br>IQ của bạn ở mức... <br><b>KHÔNG THỂ ĐO ĐƯỢC 🤡</b><br><br>Vì máy chưa từng gặp ai NGU mà TỰ TIN như bạn!";
+      }, 3000);
     }
   </script>
+
 </body>
 </html>
