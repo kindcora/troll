@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hệ Thống Phân Tích Bạn Bè</title>
+    <title>Hệ Thống Phân Tích Bạn Bè v2.0</title>
     <style>
         /* CSS để tạo giao diện kiểu Terminal "hacker" */
         @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
@@ -97,7 +97,7 @@
 <body>
 
     <div class="console">
-        <div class="console-header">SYSTEM_LOG - FRIEND_ANALYZER_v6.2025</div>
+        <div class="console-header">SYSTEM_LOG - FRIEND_ANALYZER_v1.0(KindCora)</div>
         <div id="log">Chờ lệnh...<span class="cursor"></span></div>
         <div class="button-container">
             <button id="startButton">BẮT ĐẦU PHÂN TÍCH</button>
@@ -111,7 +111,7 @@
         const log = document.getElementById('log');
         const cursor = '<span class="cursor"></span>';
 
-        // Danh sách các bước trong quá trình
+        // *** DANH SÁCH CÁC BƯỚC ĐÃ ĐƯỢC MỞ RỘNG ***
         const processSteps = [
             'Khởi động hệ thống phân tích...',
             'Đang kết nối với mẫu đối tượng... KẾT NỐI THÀNH CÔNG.',
@@ -120,17 +120,29 @@
             'Phát hiện nồng độ "lươn lẹo" cao bất thường...',
             'Truy cập kho dữ liệu "nhân phẩm"...',
             '[CẢNH BÁO]: Hệ thống sắp quá tải vì dữ liệu "tấu hài"...',
+            'Kiểm tra bộ nhớ tạm... LỖI: Bộ nhớ trống rỗng.',
+            'Đo lường chỉ số "tự luyến"... ĐÃ VƯỢT MỨC TỐI ĐA CỦA THIẾT BỊ.',
+            'Đối chiếu hình ảnh với database "trai xinh gái đẹp"... Không có kết quả trùng khớp.',
             'Đang đối chiếu với dữ liệu từ "vựa muối" Biển Chết...',
+            'Kích hoạt bộ lọc "nói chuyện duyên dáng"... BỘ LỌC BỊ CHÁY.',
+            'Kiểm tra lịch sử nói dối... CẢNH BÁO: Dữ liệu quá lớn, có nguy cơ làm tràn bộ nhớ.',
             'Xử lý hoàn tất!'
         ];
 
-        // Danh sách các kết quả ngẫu nhiên
+        // *** DANH SÁCH CÁC KẾT QUẢ "ĐỂU" ĐÃ ĐƯỢC BỔ SUNG THÊM ***
         const finalResults = [
             'PHÂN TÍCH HOÀN TẤT: Đối tượng được phân loại là "Vũ Khí Gây Cười Hàng Loạt".\nMức độ nguy hiểm: Cao.\nKhuyến cáo: Giữ khoảng cách an toàn để không bị nhiễm "độ mặn".',
             'KẾT QUẢ: 99% Tấu Hài, 1% Hơi Thở.\nNăng lực đặc biệt: Có khả năng làm sập một cuộc nói chuyện nghiêm túc trong 5 giây.',
             'BÁO CÁO: Phát hiện lỗi logic nghiêm trọng trong hệ điều hành "Não.exe".\nGợi ý sửa lỗi: Khởi động lại bằng một giấc ngủ dài. Nếu không được, vui lòng không khởi động lại nữa.',
-            'ĐÁNH GIÁ: Chỉ số duyên dáng dưới mức có thể đo lường.\nKhả năng tương thích xã hội: Cao (với vai trò Não CỨC).',
-            'CẢNH BÁO AN NINH: Đối tượng có khả năng "hack" não người đối diện bằng những câu chuyện vô lý.\nBiện pháp phòng ngừa: Luôn bật "tường lửa" hoài nghi.'
+            'ĐÁNH GIÁ: Chỉ số duyên dáng dưới mức có thể đo lường.\nKhả năng tương thích xã hội: Cao (với vai trò cây hài).',
+            'CẢNH BÁO AN NINH: Đối tượng có khả năng "hack" não người đối diện bằng những câu chuyện vô lý.\nBiện pháp phòng ngừa: Luôn bật "tường lửa" hoài nghi.',
+            'KẾT LUẬN: Đối tượng là một ca khó trong y học và là một diễn viên hài tiềm năng trong xã hội. Không nên giao phó những việc quan trọng.',
+            'PHÁN QUYẾT: Trí thông minh ở mức "thử nghiệm", nhưng độ tấu hài đã đạt chuẩn "thương mại". Khuyến nghị sử dụng cho mục đích giải trí.',
+            'BÁO CÁO CUỐI CÙNG: Mức độ đẹp trai/xinh gái của bạn tỷ lệ nghịch với sự tự tin của bạn. Mà bạn thì lại quá tự tin.',
+            'PHÂN LOẠI: "Bảo vật quốc gia" cần được bảo tồn... vì không còn ai giống bạn nữa. May mắn thay.',
+            'TỔNG KẾT: Sau khi phân tích, hệ thống đề nghị bạn nên bớt suy nghĩ lại. Vì mỗi lần bạn suy nghĩ, một tế bào não của ai đó lại chết đi vì vô lý.',
+            'TRẠNG THÁI HỆ THỐNG: Cần reset. Phân tích đối tượng này đã gây ra 13 lỗi logic và làm giảm 20% hiệu suất của AI. Bạn là một dạng virus sống.',
+            'KẾT QUẢ ĐO LƯỜNG ĐỘ MẶN: Vượt ngưỡng. Nước biển sau khi gặp bạn phải gọi bạn là "sư phụ".'
         ];
 
         startButton.addEventListener('click', runAnalysis);
@@ -142,7 +154,7 @@
 
             // Hiển thị từng bước của quá trình
             processSteps.forEach((step, index) => {
-                currentDelay += Math.random() * 500 + 500; // Thời gian chờ ngẫu nhiên từ 0.5s đến 1s
+                currentDelay += Math.random() * 400 + 400; // Thời gian chờ ngẫu nhiên từ 0.4s đến 0.8s
                 setTimeout(() => {
                     log.innerHTML = log.innerHTML.replace(cursor, ''); // Xóa con trỏ cũ
                     log.innerHTML += step + '\n' + cursor;
