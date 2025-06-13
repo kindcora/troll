@@ -1,65 +1,165 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
-  <title>Tụi Bây Nghe Nè!</title>
-  <style>
-    body {
-      background-color: black;
-      color: red;
-      font-family: 'Arial Black', sans-serif;
-      text-align: center;
-      padding-top: 100px;
-    }
-    h1 {
-      font-size: 50px;
-      margin-bottom: 30px;
-    }
-    #insult {
-      font-size: 30px;
-      color: yellow;
-      margin: 20px;
-      animation: shake 0.3s infinite;
-    }
-    @keyframes shake {
-      0% { transform: translate(2px, 1px); }
-      25% { transform: translate(-1px, 2px); }
-      50% { transform: translate(2px, -1px); }
-      75% { transform: translate(-2px, 1px); }
-      100% { transform: translate(1px, -2px); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Phân Tích Bạn Bè</title>
+    <style>
+        /* CSS để tạo giao diện kiểu Terminal "hacker" */
+        @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+
+        body {
+            background-color: #000000;
+            color: #00FF41;
+            font-family: 'VT323', monospace;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .console {
+            width: 90%;
+            max-width: 800px;
+            height: 500px;
+            border: 2px solid #00FF41;
+            border-radius: 5px;
+            background-color: rgba(0, 20, 0, 0.75);
+            box-shadow: 0 0 20px #00FF41;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .console-header {
+            background-color: #00FF41;
+            color: #000000;
+            padding: 5px 10px;
+            font-weight: bold;
+        }
+
+        #log {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            white-space: pre-wrap; /* Để xuống dòng tự động */
+            line-height: 1.5;
+        }
+        
+        /* Con trỏ nhấp nháy */
+        .cursor {
+            display: inline-block;
+            background-color: #00FF41;
+            width: 10px;
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { background-color: transparent }
+            50% { background-color: #00FF41; }
+        }
+
+        .button-container {
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid #00FF41;
+        }
+
+        #startButton {
+            background-color: #00FF41;
+            color: #000000;
+            border: none;
+            padding: 10px 20px;
+            font-family: 'VT323', monospace;
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        #startButton:hover {
+            box-shadow: 0 0 15px #00FF41;
+        }
+
+        #startButton:disabled {
+            background-color: #333;
+            color: #555;
+            cursor: not-allowed;
+        }
+
+        /* Màu cho kết quả cuối cùng */
+        .result {
+            color: #FF4136; /* Màu đỏ để cảnh báo */
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
-  <h1>🔥 THÔNG BÁO CHO TẤT CẢ TỤI BÂY 🔥</h1>
+    <div class="console">
+        <div class="console-header">SYSTEM_LOG - FRIEND_ANALYZER_v6.2025</div>
+        <div id="log">Chờ lệnh...<span class="cursor"></span></div>
+        <div class="button-container">
+            <button id="startButton">BẮT ĐẦU PHÂN TÍCH</button>
+        </div>
+    </div>
 
-  <div id="insult">Đọc kỹ nè, lũ không có giá trị xã hội!</div>
+    <script>
+        // --- JavaScript để điều khiển quá trình ---
 
-  <audio autoplay loop>
-    <source src="https://www.myinstants.com/media/sounds/trololo.mp3" type="audio/mp3">
-    Trình duyệt của mày còn ngu hơn mày nữa, không hỗ trợ nhạc troll.
-  </audio>
+        const startButton = document.getElementById('startButton');
+        const log = document.getElementById('log');
+        const cursor = '<span class="cursor"></span>';
 
-  <script>
-    const insults = [
-      "Mày không phải vấn đề – mày là TOÀN BỘ VẤN ĐỀ.",
-      "Sự tồn tại của mày là lý do người ngoài hành tinh chưa thèm ghé thăm Trái Đất.",
-      "Người ta sinh ra để sống, còn mày sinh ra để tao chửi.",
-      "Chúc mày một ngày giống não mày: không hoạt động.",
-      "Mày không ngu đâu, mày là đỉnh cao của ngu nâng cấp!",
-      "Nếu ai cũng vô dụng như mày, thế giới này cần reset.",
-      "Mày là lý do trong lớp phải có danh hiệu 'an ủi'.",
-      "Tao đang cố kiềm chế, nhưng mày cứ sống hoài làm tao khó chịu."
-    ];
+        // Danh sách các bước trong quá trình
+        const processSteps = [
+            'Khởi động hệ thống phân tích...',
+            'Đang kết nối với mẫu đối tượng... KẾT NỐI THÀNH CÔNG.',
+            'Quét võng mạc... Đã xác thực.',
+            'Phân tích cấu trúc ADN...',
+            'Phát hiện nồng độ "lươn lẹo" cao bất thường...',
+            'Truy cập kho dữ liệu "nhân phẩm"...',
+            '[CẢNH BÁO]: Hệ thống sắp quá tải vì dữ liệu "tấu hài"...',
+            'Đang đối chiếu với dữ liệu từ "vựa muối" Biển Chết...',
+            'Xử lý hoàn tất!'
+        ];
 
-    function updateInsult() {
-      const el = document.getElementById("insult");
-      const index = Math.floor(Math.random() * insults.length);
-      el.textContent = insults[index];
-    }
+        // Danh sách các kết quả ngẫu nhiên
+        const finalResults = [
+            'PHÂN TÍCH HOÀN TẤT: Đối tượng được phân loại là "Vũ Khí Gây Cười Hàng Loạt".\nMức độ nguy hiểm: Cao.\nKhuyến cáo: Giữ khoảng cách an toàn để không bị nhiễm "độ mặn".',
+            'KẾT QUẢ: 99% Tấu Hài, 1% Hơi Thở.\nNăng lực đặc biệt: Có khả năng làm sập một cuộc nói chuyện nghiêm túc trong 5 giây.',
+            'BÁO CÁO: Phát hiện lỗi logic nghiêm trọng trong hệ điều hành "Não.exe".\nGợi ý sửa lỗi: Khởi động lại bằng một giấc ngủ dài. Nếu không được, vui lòng không khởi động lại nữa.',
+            'ĐÁNH GIÁ: Chỉ số duyên dáng dưới mức có thể đo lường.\nKhả năng tương thích xã hội: Cao (với vai trò Não CỨC).',
+            'CẢNH BÁO AN NINH: Đối tượng có khả năng "hack" não người đối diện bằng những câu chuyện vô lý.\nBiện pháp phòng ngừa: Luôn bật "tường lửa" hoài nghi.'
+        ];
 
-    setInterval(updateInsult, 4000); // đổi câu chửi mỗi 4s
-  </script>
+        startButton.addEventListener('click', runAnalysis);
+
+        function runAnalysis() {
+            startButton.disabled = true;
+            log.innerHTML = ''; // Xóa log cũ
+            let currentDelay = 0;
+
+            // Hiển thị từng bước của quá trình
+            processSteps.forEach((step, index) => {
+                currentDelay += Math.random() * 500 + 500; // Thời gian chờ ngẫu nhiên từ 0.5s đến 1s
+                setTimeout(() => {
+                    log.innerHTML = log.innerHTML.replace(cursor, ''); // Xóa con trỏ cũ
+                    log.innerHTML += step + '\n' + cursor;
+                    log.scrollTop = log.scrollHeight; // Tự động cuộn xuống
+                }, currentDelay);
+            });
+
+            // Hiển thị kết quả cuối cùng sau khi hoàn tất quá trình
+            setTimeout(() => {
+                const randomResult = finalResults[Math.floor(Math.random() * finalResults.length)];
+                log.innerHTML = log.innerHTML.replace(cursor, '');
+                log.innerHTML += `\n<span class="result">${randomResult}</span>\n\nChờ lệnh tiếp theo...${cursor}`;
+                log.scrollTop = log.scrollHeight;
+                startButton.disabled = false; // Bật lại nút bấm
+            }, currentDelay + 1000); // Chờ 1 giây sau bước cuối cùng
+        }
+    </script>
 
 </body>
 </html>
